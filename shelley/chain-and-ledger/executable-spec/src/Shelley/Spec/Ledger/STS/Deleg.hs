@@ -24,14 +24,6 @@ import Cardano.Binary
 import Cardano.Prelude (NoUnexpectedThunks (..))
 import Control.Monad.Trans.Reader (asks)
 import Control.State.Transition
-  ( STS (..),
-    TRC (..),
-    TransitionRule,
-    failBecause,
-    judgmentContext,
-    liftSTS,
-    (?!),
-  )
 import qualified Data.Map.Strict as Map
 import qualified Data.Set as Set
 import Data.Typeable (Typeable)
@@ -43,7 +35,7 @@ import Shelley.Spec.Ledger.BaseTypes
     invalidKey,
   )
 import Shelley.Spec.Ledger.Coin (Coin (..))
-import Shelley.Spec.Ledger.Core (addpair, haskey, range, removekey, (∉), (⋫))
+import Shelley.Spec.Ledger.Core (addpair, dom, haskey, range, removekey, (∉), (⋫))
 import Shelley.Spec.Ledger.Credential (Credential)
 import Shelley.Spec.Ledger.Crypto (Crypto)
 import Shelley.Spec.Ledger.Keys
@@ -137,10 +129,9 @@ instance Typeable crypto => STS (DELEG crypto) where
   assertions =
     [ PreCondition
         "_stkCreds and _rewards must have the same domain"
-        ( \TRC (_, st, _) ->
-            dom
-￼              (_stkCreds st)
-￼              == (Set.map getRwdCred $ dom (_rewards st))
+        ( \(TRC (_, st, _)) ->
+            dom (_stkCreds st)
+              == (Set.map getRwdCred $ dom (_rewards st))
         )
     ]
 
