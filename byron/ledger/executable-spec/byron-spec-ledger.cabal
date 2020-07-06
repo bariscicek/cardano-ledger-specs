@@ -74,7 +74,7 @@ test-suite doctests
                        -- need these, when doctest-discover runs
                        -- to ensure they are in scope.
                      , containers
-                     , hedgehog >= 1.0
+                     , hedgehog >= 1.0.3
                      , lens
                      , memory
                      , text
