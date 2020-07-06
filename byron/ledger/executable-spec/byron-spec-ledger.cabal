@@ -45,7 +45,7 @@ library
                      , file-embed
                      , goblins
                      , hashable
-                     , hedgehog >= 1.0.3
+                     , hedgehog = 1.0.3
                      , lens
                      , template-haskell
                      , Unique >= 0.4.7.6
