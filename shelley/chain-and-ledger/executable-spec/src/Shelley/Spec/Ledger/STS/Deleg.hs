@@ -134,6 +134,16 @@ instance Typeable crypto => STS (DELEG crypto) where
   initialRules = [pure emptyDState]
   transitionRules = [delegationTransition]
 
+  assertions =
+    [ PreCondition
+        "_stkCreds and _rewards must have the same domain"
+        ( \TRC (_, st, _) ->
+            dom
+￼              (_stkCreds st)
+￼              == (Set.map getRwdCred $ dom (_rewards st))
+        )
+    ]
+
 instance NoUnexpectedThunks (PredicateFailure (DELEG crypto))
 
 instance
